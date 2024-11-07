@@ -85,7 +85,7 @@ export default function HeroSection() {
 
   return (
     <section
-      className={`relative w-full py-20 overflow-hidden ${
+      className={`mt-10 relative w-full py-20 overflow-hidden ${
         mode === "viral"
           ? "bg-custom-black text-white"
           : mode === "business"
@@ -93,7 +93,7 @@ export default function HeroSection() {
           : "bg-white text-black"
       }`}
     >
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4 relative z-10">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4 relative z-10 pl-10">
         {/* Align headings consistently */}
         <div className="flex flex-col items-start space-y-4 order-2 md:order-1">
           <h2 className="text-2xl font-bold mb-4">
