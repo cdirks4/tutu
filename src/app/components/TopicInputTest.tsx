@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import axios from 'axios';
-import { Type, ArrowRight } from 'lucide-react';
+import { useState } from "react";
+import axios from "axios";
+import { Type, ArrowRight } from "lucide-react";
 
 export default function TopicInput() {
-  const [topic, setTopic] = useState('');
+  const [topic, setTopic] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [responseData, setResponseData] = useState<{
     lyrics: string;
@@ -15,15 +15,15 @@ export default function TopicInput() {
 
   const makeRequest = async () => {
     try {
-        const response = await axios.post('/api/generate', {
-            query: topic,
-            version: 1,
-          });
+      const response = await axios.post("/api/generate", {
+        query: topic,
+        version: 1,
+      });
       setResponseData(response.data);
     } catch (error) {
-      console.error('Error generating song, retrying in 1 second...', error);
+      console.error("Error generating song, retrying in 1 second...", error);
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      await makeRequest(); 
+      await makeRequest();
     }
   };
 
@@ -42,7 +42,7 @@ export default function TopicInput() {
   return (
     <section id="topic-input" className="w-full bg-white py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-st-tropaz mb-8 text-center">
+        <h2 className="text-3xl font-bold mb-8 text-center">
           What do you want to learn today?
         </h2>
         <div className="max-w-md mx-auto">
@@ -72,27 +72,42 @@ export default function TopicInput() {
             </button>
           </form>
 
-          {isLoading && <p className="mt-4 text-center text-st-tropaz">Generating...</p>}
+          {isLoading && (
+            <p className="mt-4 text-center text-st-tropaz">Generating...</p>
+          )}
 
           {responseData && (
             <div className="mt-8 p-6 bg-gray-100 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold text-st-tropaz mb-4">Generated Song Details:</h3>
-              
-              <h4 className="text-lg font-semibold text-st-tropaz mb-2">Lyrics:</h4>
+              <h3 className="text-xl font-bold text-st-tropaz mb-4">
+                Generated Song Details:
+              </h3>
+
+              <h4 className="text-lg font-semibold text-st-tropaz mb-2">
+                Lyrics:
+              </h4>
               <p className="bg-white p-4 rounded-lg text-black whitespace-pre-line mb-4">
                 {responseData.lyrics}
               </p>
 
-              <h4 className="text-lg font-semibold text-st-tropaz mb-2">Style:</h4>
+              <h4 className="text-lg font-semibold text-st-tropaz mb-2">
+                Style:
+              </h4>
               <p className="bg-white p-4 rounded-lg text-black mb-4">
                 {responseData.style}
               </p>
 
-              <h4 className="text-lg font-semibold text-st-tropaz mb-2">URLs:</h4>
+              <h4 className="text-lg font-semibold text-st-tropaz mb-2">
+                URLs:
+              </h4>
               <ul className="list-disc list-inside bg-white p-4 rounded-lg">
                 {responseData.urls.map((url, index) => (
                   <li key={index}>
-                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-bright-green hover:underline">
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-bright-green hover:underline"
+                    >
                       {url}
                     </a>
                   </li>

@@ -85,7 +85,7 @@ export default function HeroSection() {
 
   return (
     <section
-      className={`mt-10 relative w-full py-20 overflow-hidden mode-transition ${
+      className={`relative w-full py-20 overflow-hidden ${
         mode === "viral"
           ? "bg-custom-black text-white"
           : mode === "business"
@@ -93,9 +93,9 @@ export default function HeroSection() {
           : "bg-white text-black"
       }`}
     >
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4 relative z-10 ">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4 relative z-10">
         {/* Align headings consistently */}
-        <div className="flex flex-col items-start space-y-4 order-2 md:order-1 lg:px-6">
+        <div className="flex flex-col items-start space-y-4 order-2 md:order-1">
           <h2 className="text-2xl font-bold mb-4">
             {mode === "viral"
               ? "Viral Hits"
@@ -134,14 +134,16 @@ export default function HeroSection() {
               } animate-bounce`}
             />
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Welcome to{" "}
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 font-righteous tracking-wide">
+            <span className=" text-4xl md:text-5xl block mb-2 text-gray-500">
+              Welcome to
+            </span>
             <span
-              className={`${
+              className={`tracking-tight ${
                 mode === "viral"
                   ? "text-custom-red"
                   : mode === "business"
-                  ? "text-white" // Change to white for visibility
+                  ? "text-white"
                   : "text-bright-green"
               }`}
             >
@@ -159,9 +161,9 @@ export default function HeroSection() {
           <div className="flex justify-center items-center mt-6 space-x-4">
             <button
               onClick={() => setMode("educational")}
-              className={`px-6 py-2 rounded-full font-semibold transition-colors duration-300 ${
+              className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 hover-card ${
                 mode === "educational"
-                  ? "bg-bright-green text-white"
+                  ? "bg-bright-green text-white shadow-glow"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             >
@@ -169,9 +171,9 @@ export default function HeroSection() {
             </button>
             <button
               onClick={() => setMode("viral")}
-              className={`px-6 py-2 rounded-full font-semibold transition-colors duration-300 ${
+              className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 hover-card ${
                 mode === "viral"
-                  ? "bg-custom-red text-white"
+                  ? "bg-custom-red text-white shadow-glow"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             >
@@ -179,9 +181,9 @@ export default function HeroSection() {
             </button>
             <button
               onClick={() => setMode("business")}
-              className={`px-6 py-2 rounded-full font-semibold transition-colors duration-300 ${
+              className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 hover-card ${
                 mode === "business"
-                  ? "bg-business-blue text-white"
+                  ? "bg-business-blue text-white shadow-glow"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             >
@@ -217,9 +219,8 @@ function ChatBubble({
 
   // Adjust colors based on the mode
   let bgColor = "";
-  let textColor = "text-white";
+  let textColor = "text-white font-medium text-lg";
   if (mode === "viral") {
-    // Viral mode colors
     if (type === "user") {
       bgColor = "bg-custom-red";
     } else {
@@ -227,27 +228,26 @@ function ChatBubble({
     }
   } else if (mode === "business") {
     if (type === "user") {
-      bgColor = "bg-white";
-      textColor = "text-business-blue";
+      bgColor = "bg-business-blue-50";
+      textColor = "text-business-blue-700 font-medium text-lg";
     } else {
-      bgColor = "bg-business-response";
+      bgColor = "bg-business-blue";
     }
   } else {
-    // Education mode colors
+    // Educational mode colors
     if (type === "user") {
-      bgColor = "bg-white";
-      textColor = "text-st-tropaz";
+      bgColor = "bg-bright-green-50";
+      textColor = "text-bright-green-600 font-medium text-lg";
     } else {
-      bgColor = "bg-tutor-response";
+      textColor = "text-black font-medium text-lg";
+      bgColor = "bg-whit";
     }
   }
 
-  const animationClass = "animate-fadeInUp";
-
   return (
-    <div className={`flex ${alignmentClass} max-w-sm ${animationClass}`}>
+    <div className={`flex ${alignmentClass} max-w-sm animate-fadeInUp`}>
       <div
-        className={`rounded-lg px-4 py-3 ${bgColor} ${textColor} shadow-md`}
+        className={`rounded-lg px-4 py-3 ${bgColor} ${textColor} shadow-md hover-card glass`}
         style={{ maxWidth: "75%" }}
       >
         <p className="whitespace-pre-line">{message}</p>
@@ -389,9 +389,9 @@ function TypingText({
     <p
       className={`${
         mode === "viral"
-          ? "text-custom-red"
+          ? "text-white"
           : mode === "business"
-          ? "text-business-blue"
+          ? "text-white"
           : "text-bright-green"
       } font-bold text-lg md:text-xl mb-12 max-w-2xl mx-auto typing-text`}
     >

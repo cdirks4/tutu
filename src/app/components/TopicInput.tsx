@@ -2,8 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { Type, ArrowRight } from "lucide-react";
-
+import { ArrowRight } from "lucide-react";
 export default function TopicInput({
   mode,
 }: {
@@ -68,17 +67,36 @@ export default function TopicInput({
     }
   };
 
+  // Add this type animation function
+  const TypeWriter = ({ text }: { text: string }) => {
+    const [displayedText, setDisplayedText] = useState("");
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+      if (currentIndex < text.length) {
+        const timeoutId = setTimeout(() => {
+          setDisplayedText((prev) => prev + text[currentIndex]);
+          setCurrentIndex(currentIndex + 1);
+        }, 20); // Adjust speed of typing here
+
+        return () => clearTimeout(timeoutId);
+      }
+    }, [currentIndex, text]);
+
+    return <span>{displayedText}</span>;
+  };
+
   return (
-    <section id="topic-input" className="w-full bg-white py-16">
+    <section id="topic-input" className="w-full bg-white py-16 ">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-st-tropaz mb-8 text-center">
-          {mode === "viral"
-            ? "What do you want a viral hit for today?"
-            : mode === "business"
-            ? "What business jingle do you want today?"
-            : "What do you want to learn today?"}
-        </h2>
         <div className="max-w-md mx-auto">
+          <h2 className="text-3xl font-bold text-st-tropaz mb-8 text-center">
+            {mode === "viral"
+              ? "What do you want a viral hit for today?"
+              : mode === "business"
+              ? "What business jingle do you want today?"
+              : "What do you want to learn today?"}
+          </h2>
           <form onSubmit={handleSubmit}>
             <div className="flex justify-center space-x-4 mb-6"></div>
             <input
@@ -112,12 +130,14 @@ export default function TopicInput({
           {isLoading && (
             <p className="mt-4 text-center text-st-tropaz">Generating...</p>
           )}
+        </div>
 
-          {responseData && (
-            <div className="mt-8 p-6 bg-gray-100 rounded-lg shadow-md">
+        {responseData && (
+          <div className="max-w-4xl mx-auto mt-8">
+            <div className="p-6 bg-gray-100 rounded-lg shadow-md">
               <div className="flex flex-col md:flex-row">
                 {/* Left side: Audio Players */}
-                <div className="md:w-1/2 md:pr-4">
+                <div className="md:w-1/3">
                   <h3 className="text-xl font-bold text-st-tropaz mb-4">
                     Listen to Your Song:
                   </h3>
@@ -137,16 +157,17 @@ export default function TopicInput({
                   ))}
                 </div>
                 {/* Right side: Lyrics */}
-                <div className="md:w-1/2 md:pl-4">
+                <div className="md:w-2/3 md:pl-4">
                   <h3 className="text-xl font-bold text-st-tropaz mb-4">
                     Lyrics:
                   </h3>
                   <div
                     ref={lyricsRef}
-                    className="bg-white p-6 rounded-lg text-black overflow-y-auto max-h-[400px] shadow-inner"
+                    className="bg-white p-6 rounded-lg text-black overflow-y-auto max-h-[600px] shadow-inner-lg glass hover-card w-full"
                     style={{
                       scrollBehavior: "smooth",
                       lineHeight: "1.8",
+                      minHeight: "400px",
                     }}
                   >
                     {(() => {
@@ -175,8 +196,8 @@ export default function TopicInput({
                 </div>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

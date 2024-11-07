@@ -3,28 +3,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --background: #ffffff; /* White */
-  --foreground: #000000; /* Black */
+  --background: #ffffff;
+  --foreground: #000000;
 }
 
 body {
   color: #333333;
   background-color: #f9f9f9;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-space-mono);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Enhance button styling */
 button {
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 9999px; /* Full rounded */
+  border-radius: 9999px;
   font-size: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-space-mono);
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 button:focus {
@@ -32,7 +35,89 @@ button:focus {
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
 
+button:active {
+  transform: scale(0.98);
+}
+
 /* Add animation for mode transitions */
 .mode-transition {
-  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glass morphism effect */
+.glass {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glass > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Shimmer effect */
+.shimmer {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Input focus styles */
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
+  outline: none;
+}
+
+/* Card hover effect */
+.hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
